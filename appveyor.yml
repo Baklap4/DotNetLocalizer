@@ -1,0 +1,15 @@
+version: 1.0.{build}
+pull_requests:
+  do_not_increment_build_number: true
+build_script:
+- ps: '& ./build.ps1 -target pack'
+test_script:
+- ps: '& ./build.ps1 -target test'
+artifacts:
+- path: output\*.nupkg
+  name: NuGet
+deploy:
+- provider: Environment
+  name: NuGet
+  on:
+    branch: master
