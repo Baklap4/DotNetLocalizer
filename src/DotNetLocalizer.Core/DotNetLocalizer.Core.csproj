@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Authors>Arjan Speiard</Authors>
+    <Description>Serves as base localization middelware to be used with DotNetLocalizer.Json or DotNetLocalizer.Yaml or a self created resource.</Description>
     <PackageTags>aspnetcore;localization</PackageTags>
     <PackageProjectUrl>https://github.com/Baklap4/DotNetLocalizer</PackageProjectUrl>
     <RepositoryType>git</RepositoryType>
