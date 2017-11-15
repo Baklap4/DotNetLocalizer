@@ -7,8 +7,8 @@
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>git://github.com/Baklap4/DotNetLocalizer</RepositoryUrl>
     <Version>1.0.0</Version>
-    <TargetFramework>netstandard1.6</TargetFramework>
-    <NetStandardImplicitPackageVersion>1.6.1</NetStandardImplicitPackageVersion>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <NetStandardImplicitPackageVersion>2.0.0</NetStandardImplicitPackageVersion>
   </PropertyGroup>
   
   <ItemGroup>
@@ -16,6 +16,6 @@
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="10.0.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
   </ItemGroup>
 </Project>
