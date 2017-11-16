@@ -11,9 +11,6 @@ namespace DotNetLocalizer.Core
         }
         public static IServiceCollection AddLocalization(this IServiceCollection services, Action<LocalizationOptions> setupAction)
         {
-            //services.TryAdd(new ServiceDescriptor(typeof(IStringLocalizerFactory), typeof(BaseLocalizerFactory), ServiceLifetime.Singleton));
-            //services.TryAdd(new ServiceDescriptor(typeof(IStringLocalizer), typeof(Localizer), ServiceLifetime.Singleton));
-
             if (setupAction != null)
             {
                 services.Configure(setupAction);

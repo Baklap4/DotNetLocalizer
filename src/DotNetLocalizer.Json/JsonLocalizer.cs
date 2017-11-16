@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using DotNetLocalizer.Core;
@@ -13,7 +15,10 @@ namespace DotNetLocalizer.Json
 {
     public class JsonLocalizer : Localizer
     {
-        public JsonLocalizer(string fileLocation, ILogger logger) : base(fileLocation, logger) { }
+        public JsonLocalizer(string fileLocation, ILogger logger) : base(fileLocation, logger)
+        {
+        }
+
         protected override IStringLocalizer WithCultureSpecific(CultureInfo culture)
         {
             if (culture == null)
@@ -37,8 +42,7 @@ namespace DotNetLocalizer.Json
                 }
                 else
                 {
-                    JToken value;
-                    if (resourceObject.TryGetValue(name, out value))
+                    if (resourceObject.TryGetValue(name, out JToken value))
                     {
                         var localizedString = value.ToString();
                         return localizedString;
@@ -52,6 +56,16 @@ namespace DotNetLocalizer.Json
             }
 
             this.logger.LogWarning($"Could not find key '{name}' in resource file and culture {CultureInfo.CurrentCulture}");
+            if (!this.missingResources.ContainsKey(CultureInfo.CurrentCulture.TwoLetterISOLanguageName))
+            {
+                this.missingResources.Add(CultureInfo.CurrentCulture.TwoLetterISOLanguageName, new List<string>());
+            }
+            if (this.missingResources[CultureInfo.CurrentCulture.TwoLetterISOLanguageName].Any(x => x == name))
+            {
+                return null;
+            }
+            this.missingResources[CultureInfo.CurrentCulture.TwoLetterISOLanguageName].Add(name);
+            File.WriteAllLines(Path.Combine(this.fileLocation, $"MissingStrings.{CultureInfo.CurrentCulture.TwoLetterISOLanguageName}.json"), this.missingResources[CultureInfo.CurrentCulture.TwoLetterISOLanguageName]);
             return null;
         }
 
@@ -61,29 +75,29 @@ namespace DotNetLocalizer.Json
             var cultureSuffix = "." + currentCulture.Name;
 
             var lazyJObjectGetter = new Lazy<object>(() =>
-            {
-                var resourcePath = this.fileLocation + "Strings." + currentCulture.TwoLetterISOLanguageName + ".json";
-                try
-                {
-                    var resourceFileStream =
-                        new FileStream(resourcePath, FileMode.Open, FileAccess.Read, FileShare.Read, 4096, FileOptions.Asynchronous | FileOptions.SequentialScan);
-                    using (resourceFileStream)
-                    {
-                        var resourceReader =
-                            new JsonTextReader(new StreamReader(resourceFileStream, Encoding.UTF8, true));
-                        using (resourceReader)
-                        {
-                            return JObject.Load(resourceReader);
-                        }
-                    }
-                }
-                catch (Exception e)
-                {
-                    this.logger.LogError($"Error occurred attempting to read JSON resource file {resourcePath}: {e}");
-                    return null;
-                }
-
-            }, LazyThreadSafetyMode.ExecutionAndPublication);
+                                                     {
+                                                         var resourcePath = this.fileLocation + "Strings." + currentCulture.TwoLetterISOLanguageName + ".json";
+                                                         try
+                                                         {
+                                                             var resourceFileStream =
+                                                                 new FileStream(resourcePath, FileMode.Open, FileAccess.Read, FileShare.Read, 4096, FileOptions.Asynchronous | FileOptions.SequentialScan);
+                                                             using (resourceFileStream)
+                                                             {
+                                                                 var resourceReader =
+                                                                     new JsonTextReader(new StreamReader(resourceFileStream, Encoding.UTF8, true));
+                                                                 using (resourceReader)
+                                                                 {
+                                                                     return JObject.Load(resourceReader);
+                                                                 }
+                                                             }
+                                                         }
+                                                         catch (Exception e)
+                                                         {
+                                                             this.logger.LogError($"Error occurred attempting to read JSON resource file {resourcePath}: {e}");
+                                                             return null;
+                                                         }
+                                                     },
+                                                     LazyThreadSafetyMode.ExecutionAndPublication);
 
             lazyJObjectGetter = this.resourceObjectCache.GetOrAdd(cultureSuffix, lazyJObjectGetter);
             var resourceObject = JObject.FromObject(lazyJObjectGetter.Value);

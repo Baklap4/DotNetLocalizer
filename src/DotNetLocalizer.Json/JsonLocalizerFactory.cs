@@ -10,7 +10,9 @@ namespace DotNetLocalizer.Json
 {
     public class JsonLocalizerFactory : BaseLocalizerFactory
     {
-        public JsonLocalizerFactory(IHostingEnvironment applicationEnvironment, IOptions<LocalizationOptions> options, ILoggerFactory loggerFactory) : base(applicationEnvironment, options, loggerFactory) { }
+        public JsonLocalizerFactory(IHostingEnvironment applicationEnvironment, IOptions<LocalizationOptions> options, ILoggerFactory loggerFactory) : base(applicationEnvironment, options, loggerFactory)
+        {
+        }
 
         public override IStringLocalizer Create(Type resourceSource)
         {
