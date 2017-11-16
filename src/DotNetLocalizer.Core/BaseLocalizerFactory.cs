@@ -33,6 +33,5 @@ namespace DotNetLocalizer.Core
 
         public abstract IStringLocalizer Create(Type resourceSource);
         public abstract IStringLocalizer Create(string baseName, string location);
-        
     }
 }

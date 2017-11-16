@@ -2,8 +2,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Localization;
-using LocalizationOptions = DotNetLocalizer.Core.LocalizationOptions;
 using CoreServiceCollectionExtensions = DotNetLocalizer.Core.ServiceCollectionExtensions;
+using LocalizationOptions = DotNetLocalizer.Core.LocalizationOptions;
 
 namespace DotNetLocalizer.Json
 {
@@ -12,8 +12,9 @@ namespace DotNetLocalizer.Json
         public static IServiceCollection AddJsonLocalization(this IServiceCollection services)
         {
             return CoreServiceCollectionExtensions.AddLocalization(services)
-                .AddJsonLocalization(null);
+                                                  .AddJsonLocalization(null);
         }
+
         public static IServiceCollection AddJsonLocalization(this IServiceCollection services, Action<LocalizationOptions> setupAction)
         {
             services.TryAdd(new ServiceDescriptor(typeof(IStringLocalizerFactory), typeof(JsonLocalizerFactory), ServiceLifetime.Singleton));

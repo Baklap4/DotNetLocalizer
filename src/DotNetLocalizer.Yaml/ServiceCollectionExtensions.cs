@@ -2,8 +2,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Localization;
-using LocalizationOptions = DotNetLocalizer.Core.LocalizationOptions;
 using CoreServiceCollectionExtensions = DotNetLocalizer.Core.ServiceCollectionExtensions;
+using LocalizationOptions = DotNetLocalizer.Core.LocalizationOptions;
 
 namespace DotNetLocalizer.Yaml
 {
@@ -12,8 +12,9 @@ namespace DotNetLocalizer.Yaml
         public static IServiceCollection AddYamlLocalization(this IServiceCollection services)
         {
             return CoreServiceCollectionExtensions.AddLocalization(services)
-                .AddYamlLocalization(null);
+                                                  .AddYamlLocalization(null);
         }
+
         public static IServiceCollection AddYamlLocalization(this IServiceCollection services, Action<LocalizationOptions> setupAction)
         {
             services.TryAdd(new ServiceDescriptor(typeof(IStringLocalizerFactory), typeof(YamlLocalizerFactory), ServiceLifetime.Singleton));
