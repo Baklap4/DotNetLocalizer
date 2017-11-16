@@ -1,0 +1,9 @@
+﻿{
+  "Language": "Language",
+  "NotFoundKeyInCurrentCultureButInOtherFallback":
+    "Key not found in current culture ('{0}') but found in other culture (fallback option)",
+  "ObjectExampleKey": "Give me an object: '{0}'",
+  "OtherKey": "Other key",
+  "RequestCultureProvider": "Request Culture Provider",
+  "SomeKey": "Some key"
+}

@@ -1,0 +1,19 @@
+﻿@using System.Globalization
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer localizer
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div>
+    Key 'SomeKey' => @localizer["SomeKey"]<br/>
+    Key 'OtherKey' => @localizer["OtherKey"]<br/><br/>
+
+    This one gives the value from ViewData["Title"] => @ViewData["Title"]<br/>
+    Key 'ObjectExampleKey' => @localizer.GetString("ObjectExampleKey", ViewData["Title"])<br/>
+    Key 'NotFoundKey' => @localizer["NotFoundKey"]<br/>
+    Key 'NotFoundKeyInCurrentCultureButInOtherFallback' => @localizer.GetString("NotFoundKeyInCurrentCultureButInOtherFallback", CultureInfo.CurrentCulture.TwoLetterISOLanguageName)<br/>
+</div>
+<div>
+    @await Html.PartialAsync("_LanguagePartial")
+</div>
