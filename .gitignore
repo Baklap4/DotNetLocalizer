@@ -258,3 +258,6 @@ output
 
 # Mac os files
 .DS_Store
+
+# Localizer Missing Strings
+*MissingStrings*
