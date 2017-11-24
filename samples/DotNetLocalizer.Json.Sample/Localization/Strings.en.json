@@ -1,7 +1,32 @@
 ﻿{
+  "ComplexListObject": {
+    "List": [
+      {
+        "Name": "Naam"
+      },
+      {
+        "Name": "Naam2"
+      }
+    ]
+  },
+  "ComplexListObjectMissingListItems": {
+    "List": [
+      {
+        "Name": "Naam"
+      },
+      {
+        "Name": "Naam2"
+      }
+    ]
+  },
   "Language": "Language",
-  "NotFoundKeyInCurrentCultureButInOtherFallback":
-    "Key not found in current culture ('{0}') but found in other culture (fallback option)",
+  "NestedObject": {
+    "NestedProperty": "Een geneste eigenschap"
+  },
+  "NestedObjectMissingChilds": {
+
+  },
+  "NotFoundKeyInCurrentCultureButInOtherFallback": "Key not found in current culture ('{0}') but found in other culture (fallback option)",
   "ObjectExampleKey": "Give me an object: '{0}'",
   "OtherKey": "Other key",
   "RequestCultureProvider": "Request Culture Provider",

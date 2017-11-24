@@ -13,6 +13,15 @@
     Key 'ObjectExampleKey' => @localizer.GetString("ObjectExampleKey", ViewData["Title"])<br/>
     Key 'NotFoundKey' => @localizer["NotFoundKey"]<br/>
     Key 'NotFoundKeyInCurrentCultureButInOtherFallback' => @localizer.GetString("NotFoundKeyInCurrentCultureButInOtherFallback", CultureInfo.CurrentCulture.TwoLetterISOLanguageName)<br/>
+    Key 'NestedObject.NestedProperty' => @localizer["NestedObject.NestedProperty"]<br/>
+    Key 'NestedObject.NestedMissingProperty' => @localizer["NestedObject.NestedMissingProperty"]<br />
+    Key 'NestedObjectMissingChilds.NestedProperty' => @localizer["NestedObjectMissingChilds.NestedProperty"]<br/>
+    Key 'ComplexListObject.List.0.Name' => @localizer["ComplexListObject.List.0.Name"]<br/>
+    Key 'ComplexListObject.List.1.Name' => @localizer["ComplexListObject.List.1.Name"]<br/>
+    Key 'ComplexListObject.List.2.Name' => @localizer["ComplexListObject.List.2.Name"]<br/>
+    Key 'ComplexListObjectMissingListItems.List.0.Name' => @localizer["ComplexListObjectMissingListItems.List.0.Name"]<br/>
+    Key 'ComplexListObjectMissingListItems.List.1.Name' => @localizer["ComplexListObjectMissingListItems.List.1.Name"]<br/>
+    Key 'ComplexListObjectMissingListItems.List.2.Name' => @localizer["ComplexListObjectMissingListItems.List.2.Name"]<br/>
 </div>
 <div>
     @await Html.PartialAsync("_LanguagePartial")
