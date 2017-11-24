@@ -8,6 +8,7 @@ using System.Threading;
 using DotNetLocalizer.Core;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
+using DotNetLocalizer.Json.Extensions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -42,10 +43,9 @@ namespace DotNetLocalizer.Json
                 }
                 else
                 {
-                    if (resourceObject.TryGetValue(name, out JToken value))
+                    if (resourceObject.TryGetValue(name, out JToken foundLocalizedValue, name.Contains('.')))
                     {
-                        var localizedString = value.ToString();
-                        return localizedString;
+                        return foundLocalizedValue.ToString();
                     }
                 }
 
