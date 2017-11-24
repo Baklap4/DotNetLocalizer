@@ -1,5 +1,31 @@
 ﻿{
+  "ComplexListObject": {
+    "List": [
+      {
+        "Name": "Naam"
+      },
+      {
+        "Name": "Naam2"
+      }
+    ]
+  },
+  "ComplexListObjectMissingListItems": {
+    "List": [
+      {
+        "Name": "Naam"
+      },
+      {
+        "Name": "Naam2"
+      }
+    ]
+  },
   "Language": "Taal",
+  "NestedObject": {
+    "NestedProperty": "Een geneste eigenschap"
+  },
+  "NestedObjectMissingChilds": {
+
+  },
   "ObjectExampleKey": "Geef mij een object: '{0}'",
   "OtherKey": "Een andere sleutel",
   "RequestCultureProvider": "Request Cultuur Provider",
