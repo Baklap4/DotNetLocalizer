@@ -1,6 +1,6 @@
-version: 1.0.7.{build}
+version: 1.0.8.{build}
 init:
-- ps: If ($env:APPVEYOR_REPO_BRANCH -eq "master" ) { If ($env:APPVEYOR_PULL_REQUEST_NUMBER -gt 0) { Update-AppveyorBuild -Version "1.0.7-$($env:appveyor_repo_commit.substring(0,7))-$env:appveyor_build_number" } Else { Update-AppveyorBuild -Version "1.0.8" } } Else { Update-AppveyorBuild -Version "1.0.7-$($env:appveyor_repo_commit.substring(0,7))-$env:appveyor_build_number" }
+- ps: If ($env:APPVEYOR_REPO_BRANCH -eq "master" ) { If ($env:APPVEYOR_PULL_REQUEST_NUMBER -gt 0) { Update-AppveyorBuild -Version "1.0.8-$($env:appveyor_repo_commit.substring(0,7))-$env:appveyor_build_number" } Else { Update-AppveyorBuild -Version "1.0.9" } } Else { Update-AppveyorBuild -Version "1.0.8-$($env:appveyor_repo_commit.substring(0,7))-$env:appveyor_build_number" }
 build_script:
 - ps: '& ./build.ps1 -target pack'
 test_script:
