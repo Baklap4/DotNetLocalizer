@@ -33,6 +33,28 @@ public void ConfigureServices(IServiceCollection services)
 	services.AddMvc()
 		.AddDataAnnotationsLocalization()
 		.AddViewLocalization();
+		
+	// Configure RequestLocalizationOptions so the framework knows what we're dealing with.
+	services.Configure<RequestLocalizationOptions>(options =>
+	{
+		const string enUSCulture = "en-US";
+		var supportedCultures = new[]
+		{
+			new CultureInfo(enUSCulture),
+			new CultureInfo("nl-NL")
+		};
+
+		options.DefaultRequestCulture = new RequestCulture(culture: enUSCulture, uiCulture: enUSCulture);
+		options.SupportedCultures = supportedCultures;
+		options.SupportedUICultures = supportedCultures;
+
+		options.AddInitialRequestCultureProvider(new CustomRequestCultureProvider(context =>
+		{
+			// My custom request culture logic
+			var result = new ProviderCultureResult("en");
+			return Task.FromResult(result);
+		}));
+	});
 }
 ```
 
@@ -58,7 +80,8 @@ public void Configure(IApplicationBuilder app)
 
 	app.UseStaticFiles();
 
-	app.UseMvc(routes => routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}"));
+	app.UseRouting();
+	app.UseEndpoints(endpoints => endpoints.MapDefaultControllerRoute());
 }
 ```
 
@@ -77,6 +100,28 @@ public void ConfigureServices(IServiceCollection services)
 	services.AddMvc()
 		.AddDataAnnotationsLocalization()
 		.AddViewLocalization();
+		
+	// Configure RequestLocalizationOptions so the framework knows what we're dealing with.
+	services.Configure<RequestLocalizationOptions>(options =>
+	{
+		const string enUSCulture = "en-US";
+		var supportedCultures = new[]
+		{
+			new CultureInfo(enUSCulture),
+			new CultureInfo("nl-NL")
+		};
+
+		options.DefaultRequestCulture = new RequestCulture(culture: enUSCulture, uiCulture: enUSCulture);
+		options.SupportedCultures = supportedCultures;
+		options.SupportedUICultures = supportedCultures;
+
+		options.AddInitialRequestCultureProvider(new CustomRequestCultureProvider(context =>
+		{
+			// My custom request culture logic
+			var result = new ProviderCultureResult("en");
+			return Task.FromResult(result);
+		}));
+	});
 }
 ```
 
