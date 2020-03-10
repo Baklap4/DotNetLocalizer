@@ -9,12 +9,15 @@ namespace DotNetLocalizer.Core
         {
             return services.AddLocalization(null);
         }
+
+
         public static IServiceCollection AddLocalization(this IServiceCollection services, Action<LocalizationOptions> setupAction)
         {
             if (setupAction != null)
             {
                 services.Configure(setupAction);
             }
+
             return services;
         }
     }

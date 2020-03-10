@@ -1,20 +1,30 @@
-﻿using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace DotNetLocalizer.Json.Sample
 {
-    public class Program
+    public static class Program
     {
         public static void Main(string[] args)
         {
-            Program.BuildWebHost(args).Run();
+            var host = Program.BuildWebHost(args);
+
+            host.Run();
         }
 
-        public static IWebHost BuildWebHost(string[] args)
+        private static IHost BuildWebHost(string[] args)
         {
-            return WebHost.CreateDefaultBuilder(args)
-                          .UseStartup<Startup>()
-                          .Build();
+            return CreateHostBuilder(args).Build();
+        }
+
+        private static IHostBuilder CreateHostBuilder(string[] args)
+        {
+            return Host.CreateDefaultBuilder(args).ConfigureWebHostDefaults(webBuilder => webBuilder.UseStartup<Startup>()).ConfigureLogging((context, logging) =>
+            {
+                logging.AddConsole();
+                logging.AddDebug();
+            });
         }
     }
 }

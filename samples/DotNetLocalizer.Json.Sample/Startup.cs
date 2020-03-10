@@ -1,45 +1,48 @@
 ﻿using System.Globalization;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Localization;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Hosting;
 
 namespace DotNetLocalizer.Json.Sample
 {
     public class Startup
     {
-        public Startup(IHostingEnvironment env)
-        {
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(env.ContentRootPath)
-                .AddJsonFile("appsettings.json", false, true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", true)
-                .AddEnvironmentVariables();
-            this.Configuration = builder.Build();
-        }
-
-        public IConfigurationRoot Configuration { get; }
-
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddJsonLocalization();
             services.AddMvc()
                     .AddDataAnnotationsLocalization()
                     .AddViewLocalization();
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                const string enUSCulture = "en-US";
+                var supportedCultures = new[]
+                {
+                    new CultureInfo(enUSCulture),
+                    new CultureInfo("nl-NL")
+                };
+
+                options.DefaultRequestCulture = new RequestCulture(culture: enUSCulture, uiCulture: enUSCulture);
+                options.SupportedCultures = supportedCultures;
+                options.SupportedUICultures = supportedCultures;
+
+                options.AddInitialRequestCultureProvider(new CustomRequestCultureProvider(context =>
+                {
+                    // My custom request culture logic
+                    var result = new ProviderCultureResult("en");
+                    return Task.FromResult(result);
+                }));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostEnvironment env)
         {
-            loggerFactory.AddConsole(this.Configuration.GetSection("Logging"));
-            loggerFactory.AddDebug();
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseBrowserLink();
             }
             else
             {
@@ -47,26 +50,26 @@ namespace DotNetLocalizer.Json.Sample
             }
 
             var supportedCultures = new[]
-                                    {
-                                        new CultureInfo("en-US"),
-                                        new CultureInfo("nl-NL")
-                                    };
+            {
+                new CultureInfo("en-US"),
+                new CultureInfo("nl-NL")
+            };
+
             app.UseRequestLocalization(new RequestLocalizationOptions
-                                       {
-                                           DefaultRequestCulture = new RequestCulture("en"),
+            {
+                DefaultRequestCulture = new RequestCulture("en"),
 
-                                           // Formatting numbers, dates, etc.
-                                           SupportedCultures = supportedCultures,
+                // Formatting numbers, dates, etc.
+                SupportedCultures = supportedCultures,
 
-                                           // UI strings that we have localized.
-                                           SupportedUICultures = supportedCultures
-                                       });
+                // UI strings that we have localized.
+                SupportedUICultures = supportedCultures
+            });
 
             app.UseStaticFiles();
 
-            app.UseMvc(routes => routes.MapRoute(
-                                                 "default",
-                                                 "{controller=Home}/{action=Index}/{id?}"));
+            app.UseRouting();
+            app.UseEndpoints(endpoints => endpoints.MapDefaultControllerRoute());
         }
     }
 }

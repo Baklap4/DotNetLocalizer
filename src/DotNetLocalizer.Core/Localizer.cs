@@ -31,7 +31,9 @@ namespace DotNetLocalizer.Core
             return this.WithCultureSpecific(culture);
         }
 
+#pragma warning disable IDE0060 // Remove unused parameter
         protected IEnumerable<LocalizedString> GetAllStrings(bool includeAncestorCultures, CultureInfo culture)
+#pragma warning restore IDE0060 // Remove unused parameter
         {
             throw new NotImplementedException();
         }
@@ -60,7 +62,7 @@ namespace DotNetLocalizer.Core
             get
             {
                 var format = this.GetLocalizedString(name, CultureInfo.CurrentUICulture);
-                var value = string.Format(format ?? name, arguments);
+                var value = String.Format(format ?? name, arguments);
                 return new LocalizedString(name, value, format == null);
             }
         }

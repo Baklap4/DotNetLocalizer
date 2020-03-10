@@ -20,7 +20,7 @@ namespace DotNetLocalizer.Core
         {
             this.logger = loggerFactory.CreateLogger<BaseLocalizerFactory>();
 
-            if (!string.IsNullOrEmpty(options.Value.ResourcesPath) && Directory.Exists(options.Value.ResourcesPath))
+            if (!String.IsNullOrEmpty(options.Value.ResourcesPath) && Directory.Exists(options.Value.ResourcesPath))
             {
                 this.resourceLocation = Path.Combine(applicationEnvironment.ContentRootPath, options.Value.ResourcesPath) + Path.DirectorySeparatorChar;
             }

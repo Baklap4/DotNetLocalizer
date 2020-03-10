@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using DotNetLocalizer.Core;
+using DotNetLocalizer.Json.Extensions;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
-using DotNetLocalizer.Json.Extensions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -34,7 +34,7 @@ namespace DotNetLocalizer.Json
             var currentCulture = CultureInfo.CurrentCulture;
             CultureInfo previousCulture = null;
 
-            while (!object.Equals(previousCulture, currentCulture) && !string.IsNullOrEmpty(currentCulture.TwoLetterISOLanguageName) && currentCulture.TwoLetterISOLanguageName != "iv")
+            while (!Object.Equals(previousCulture, currentCulture) && !String.IsNullOrEmpty(currentCulture.TwoLetterISOLanguageName) && currentCulture.TwoLetterISOLanguageName != "iv")
             {
                 var resourceObject = this.GetResourceObject(currentCulture);
                 if (resourceObject == null)
@@ -43,7 +43,7 @@ namespace DotNetLocalizer.Json
                 }
                 else
                 {
-                    if (resourceObject.TryGetValue(name, out JToken foundLocalizedValue, name.Contains('.')))
+                    if (resourceObject.TryGetValue(name, out var foundLocalizedValue, name.Contains('.')))
                     {
                         return foundLocalizedValue.ToString();
                     }
