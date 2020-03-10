@@ -1,6 +1,6 @@
 version: 2.0.0.{build}
 install:
-- ps: '& ./build/ci/appveyor/installDotnetCore3.1.ps1'
+- ps: '& ./install-dotnet.ps1'
 init:
 - ps: If ($env:APPVEYOR_REPO_BRANCH -eq "master" ) { If ($env:APPVEYOR_PULL_REQUEST_NUMBER -gt 0) { Update-AppveyorBuild -Version "2.0.0-$($env:appveyor_repo_commit.substring(0,7))-$env:appveyor_build_number" } Else { Update-AppveyorBuild -Version "2.0.0" } } Else { Update-AppveyorBuild -Version "2.0.0-$($env:appveyor_repo_commit.substring(0,7))-$env:appveyor_build_number" }
 build_script:
